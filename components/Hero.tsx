@@ -42,7 +42,7 @@ export default function Hero() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
             </span>
             <span className="text-xs font-semibold text-gray-700 tracking-wide">
-              TRUSTED BY 10,000+ FAMILIES ACROSS INDIA
+              TRUSTED BY 2,000+ FAMILIES ACROSS INDIA
             </span>
           </div>
 
@@ -130,7 +130,7 @@ export default function Hero() {
               <div>
                 <p className="text-xs text-gray-500">Now serving</p>
                 <p className="font-serif font-semibold text-gray-900">
-                  248 mothers today
+                  138 mothers today
                 </p>
               </div>
             </div>
