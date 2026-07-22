@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, Star, Heart } from "lucide-react";
+import Link from "next/link";
 
 const STATS = [
-  { icon: Heart, label: "Happy Mothers", value: "10,000+" },
+  { icon: Heart, label: "Happy Mothers", value: "2000+" },
   { icon: Star, label: "Avg. Rating", value: "4.9" },
   { icon: ShieldCheck, label: "Verified", value: "100%" },
 ];
@@ -68,17 +69,25 @@ export default function Hero() {
 
           {/* Buttons */}
           <div className="flex flex-wrap gap-4 mt-10">
-            <button className="group flex items-center gap-2 bg-gray-900 text-white font-semibold px-7 py-4 rounded-full shadow-lg shadow-gray-900/20 hover:shadow-2xl hover:shadow-gray-900/40 hover:scale-[1.03] transition-all duration-300">
-              Book a Caregiver
-              <ArrowRight
-                size={18}
-                className="group-hover:translate-x-1 transition-transform"
-              />
-            </button>
 
-            <button className="flex items-center gap-2 px-7 py-4 rounded-full font-semibold bg-white/80 backdrop-blur border border-gray-200 text-gray-800 hover:bg-white hover:border-gray-300 transition-all duration-300">
-              Become a Caregiver
-            </button>
+          <Link
+           href="/book-caregiver"
+           className="group inline-flex items-center gap-2 bg-gray-900 text-white font-semibold px-7 py-4 rounded-full shadow-lg hover:scale-[1.03] transition-all duration-300"
+        >
+          Book a Caregiver
+          <ArrowRight
+          size={18}
+          className="group-hover:translate-x-1 transition-transform"
+        />
+          </Link>
+
+          <Link
+          href="/become-caregiver"
+          className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-semibold bg-white/80 backdrop-blur border border-gray-200 text-gray-800 hover:bg-white hover:border-gray-300 transition-all duration-300"
+        >
+          Become a Caregiver
+          </Link>
+
           </div>
 
           {/* Stats */}

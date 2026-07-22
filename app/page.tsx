@@ -10,13 +10,27 @@ export default function Home() {
   return (
     <main className="overflow-x-hidden">
       <Navbar />
-      <section id="home">
+
+      <section id="home"className="scroll-mt-24">
         <Hero />
       </section>
-      <Services />
-      <Pricing />
-      <Cities />
-      <Contact />
+
+      <section id="services"className="scroll-mt-24">
+        <Services />
+      </section>
+
+      <section id="pricing"className="scroll-mt-24">
+        <Pricing />
+      </section>
+
+      <section id="cities"className="scroll-mt-24">
+        <Cities />
+      </section>
+
+      <section id="contact"className="scroll-mt-24">
+        <Contact />
+      </section>
+
       <WhatsAppButton />
     </main>
   );

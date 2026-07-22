@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, Sparkles, Crown, Star } from "lucide-react";
+import Link from "next/link";
 
 const PLANS = [
   {
@@ -19,6 +20,7 @@ const PLANS = [
       "Verified caregiver",
     ],
     popular: false,
+    planValue: "7 Days",
   },
   {
     icon: Crown,
@@ -36,6 +38,7 @@ const PLANS = [
       "Backup caregiver",
     ],
     popular: true,
+    planValue: "30 Days",
   },
   {
     icon: Sparkles,
@@ -54,19 +57,21 @@ const PLANS = [
       "Wellness therapy sessions",
     ],
     popular: false,
+    planValue: "45 Days",
   },
 ];
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative overflow-hidden bg-gradient-to-b from-white via-[#FDE8E4] to-white py-24">
-
+    <section
+      id="pricing"
+      className="relative overflow-hidden bg-gradient-to-b from-white via-[#FDE8E4] to-white py-24"
+    >
       {/* Blobs */}
       <div className="absolute top-40 left-10 w-[400px] h-[400px] bg-rose-200 rounded-full blur-[140px] opacity-40" />
       <div className="absolute bottom-40 right-10 w-[400px] h-[400px] bg-amber-200 rounded-full blur-[140px] opacity-40" />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -90,8 +95,8 @@ export default function Pricing() {
           </h2>
 
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            Honest pricing. No hidden fees. Cancel anytime.
-            Every plan includes 100% verified caregivers.
+            Honest pricing. No hidden fees. Cancel anytime. Every plan includes
+            100% verified caregivers.
           </p>
         </motion.div>
 
@@ -120,56 +125,101 @@ export default function Pricing() {
               )}
 
               {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${plan.color} flex items-center justify-center shadow-lg mb-6`}>
+              <div
+                className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${plan.color} flex items-center justify-center shadow-lg mb-6`}
+              >
                 <plan.icon size={24} className="text-white" />
               </div>
 
               {/* Tag */}
-              <span className={`text-xs font-semibold tracking-wide ${plan.popular ? "text-rose-300" : "text-rose-500"}`}>
+              <span
+                className={`text-xs font-semibold tracking-wide ${
+                  plan.popular ? "text-rose-300" : "text-rose-500"
+                }`}
+              >
                 {plan.tag.toUpperCase()}
               </span>
 
               {/* Name */}
-              <h3 className={`font-serif text-3xl font-semibold mt-2 ${plan.popular ? "text-white" : "text-gray-900"}`}>
+              <h3
+                className={`font-serif text-3xl font-semibold mt-2 ${
+                  plan.popular ? "text-white" : "text-gray-900"
+                }`}
+              >
                 {plan.name}
               </h3>
 
               {/* Price */}
               <div className="mt-6 flex items-baseline gap-1">
-                <span className={`text-2xl font-medium ${plan.popular ? "text-white/70" : "text-gray-500"}`}>₹</span>
-                <span className={`font-serif text-5xl font-bold ${plan.popular ? "text-white" : "text-gray-900"}`}>
+                <span
+                  className={`text-2xl font-medium ${
+                    plan.popular ? "text-white/70" : "text-gray-500"
+                  }`}
+                >
+                  ₹
+                </span>
+                <span
+                  className={`font-serif text-5xl font-bold ${
+                    plan.popular ? "text-white" : "text-gray-900"
+                  }`}
+                >
                   {plan.price}
                 </span>
               </div>
-              <p className={`text-sm mt-1 ${plan.popular ? "text-white/60" : "text-gray-500"}`}>
+              <p
+                className={`text-sm mt-1 ${
+                  plan.popular ? "text-white/60" : "text-gray-500"
+                }`}
+              >
                 {plan.duration}
               </p>
 
               {/* Features */}
-              <div className={`h-px my-6 ${plan.popular ? "bg-white/10" : "bg-gray-100"}`} />
+              <div
+                className={`h-px my-6 ${
+                  plan.popular ? "bg-white/10" : "bg-gray-100"
+                }`}
+              />
               <ul className="space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
-                    <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                      plan.popular ? "bg-rose-500" : "bg-rose-100"
-                    }`}>
-                      <Check size={12} className={plan.popular ? "text-white" : "text-rose-600"} strokeWidth={3} />
+                    <div
+                      className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        plan.popular ? "bg-rose-500" : "bg-rose-100"
+                      }`}
+                    >
+                      <Check
+                        size={12}
+                        className={
+                          plan.popular ? "text-white" : "text-rose-600"
+                        }
+                        strokeWidth={3}
+                      />
                     </div>
-                    <span className={`text-sm ${plan.popular ? "text-white/90" : "text-gray-700"}`}>
+                    <span
+                      className={`text-sm ${
+                        plan.popular ? "text-white/90" : "text-gray-700"
+                      }`}
+                    >
                       {feature}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              {/* Button */}
-              <button className={`w-full mt-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 ${
-                plan.popular
-                  ? "bg-white text-gray-900 hover:shadow-2xl"
-                  : "bg-gray-900 text-white hover:shadow-xl"
-              }`}>
+              {/* Button — Redirects to Book Caregiver */}
+              <Link
+                href={`/book-caregiver?plan=${encodeURIComponent(
+                  plan.planValue
+                )}`}
+                className={`block text-center w-full mt-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 ${
+                  plan.popular
+                    ? "bg-white text-gray-900 hover:shadow-2xl"
+                    : "bg-gray-900 text-white hover:shadow-xl"
+                }`}
+              >
                 Get Started
-              </button>
+              </Link>
             </motion.div>
           ))}
         </div>
