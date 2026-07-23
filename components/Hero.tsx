@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Star, Heart } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const STATS = [
   { icon: Heart, label: "Happy Mothers", value: "2000+" },
@@ -11,7 +12,25 @@ const STATS = [
   { icon: ShieldCheck, label: "Verified", value: "100%" },
 ];
 
+// 🎯 Daily rotating number generator
+const getDailyMothersCount = () => {
+  const today = new Date();
+  const dayOfYear = Math.floor(
+    (today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
+  const seed = dayOfYear + today.getFullYear();
+  const random = Math.abs(Math.sin(seed) * 10000) % 60;
+  return Math.floor(120 + random); // Range: 120-180
+};
+
 export default function Hero() {
+  const [mothersToday, setMothersToday] = useState(138); // Default fallback
+
+  useEffect(() => {
+    setMothersToday(getDailyMothersCount());
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F3] via-[#FFF3EC] to-[#FDE8E4] min-h-screen flex items-center">
       {/* Soft blurred blobs */}
@@ -47,10 +66,7 @@ export default function Hero() {
         >
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-rose-100 shadow-sm mb-6">
-            <span
-              className="relative flex h-2 w-2"
-              aria-hidden="true"
-            >
+            <span className="relative flex h-2 w-2" aria-hidden="true">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
             </span>
@@ -131,7 +147,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="relative"
         >
-          {/* 🎯 Optimized Hero Image */}
+          {/* Hero Image */}
           <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-rose-200/50 border-4 border-white">
             <Image
               src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=1000&auto=format&fit=crop"
@@ -148,7 +164,7 @@ export default function Hero() {
             />
           </div>
 
-          {/* Floating card — top right */}
+          {/* 🎯 Floating card — Now with DYNAMIC daily number */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -165,7 +181,7 @@ export default function Hero() {
               <div>
                 <p className="text-xs text-gray-500">Now serving</p>
                 <p className="font-serif font-semibold text-gray-900">
-                  138 mothers today
+                  {mothersToday} mothers today
                 </p>
               </div>
             </div>
@@ -197,7 +213,7 @@ export default function Hero() {
             <p className="text-xs text-gray-500 mt-2">— Priya, Mumbai</p>
           </motion.div>
 
-          {/* Floating verified badge — bottom right */}
+          {/* Floating verified badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
