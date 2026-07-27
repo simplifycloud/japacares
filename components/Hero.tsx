@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Star, Heart } from "lucide-react";
 import Link from "next/link";
@@ -12,6 +12,30 @@ const STATS = [
   { icon: ShieldCheck, label: "Verified", value: "100%" },
 ];
 
+// 🎯 Hero Images — Add your Indian photos here
+const HERO_IMAGES = [
+  {
+    src: "/hero-1.jpg",
+    alt: "Traditional Indian baby oil massage by experienced caregiver",
+    caption: "Traditional Baby Massage",
+  },
+  {
+    src: "/hero-2.jpg",
+    alt: "Loving mother caring for her newborn baby with support",
+    caption: "Loving Mother Care",
+  },
+  {
+    src: "/hero-3.jpg",
+    alt: "Experienced Indian caregiver supporting new mother and baby",
+    caption: "Expert Postpartum Support",
+  },
+  {
+    src: "/hero-4.jpg",
+    alt: "Happy Indian family with newborn baby - JapaCares services",
+    caption: "Happy Families",
+  },
+];
+
 // 🎯 Daily rotating number generator
 const getDailyMothersCount = () => {
   const today = new Date();
@@ -21,14 +45,24 @@ const getDailyMothersCount = () => {
   );
   const seed = dayOfYear + today.getFullYear();
   const random = Math.abs(Math.sin(seed) * 10000) % 60;
-  return Math.floor(120 + random); // Range: 120-180
+  return Math.floor(120 + random);
 };
 
 export default function Hero() {
-  const [mothersToday, setMothersToday] = useState(138); // Default fallback
+  const [mothersToday, setMothersToday] = useState(138);
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     setMothersToday(getDailyMothersCount());
+  }, []);
+
+  // 🎯 Auto-rotate images every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 4000); // 4 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -140,36 +174,81 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* ═══════════ RIGHT IMAGE ═══════════ */}
+        {/* ═══════════ RIGHT IMAGE SLIDER ═══════════ */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
           className="relative"
         >
-          {/* Hero Image */}
-          <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-rose-200/50 border-4 border-white">
-            <Image
-              src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=1000&auto=format&fit=crop"
-              alt="Happy mother holding her newborn baby - JapaCares postpartum care services"
-              width={1000}
-              height={560}
-              priority
-              className="w-full h-[560px] object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-rose-900/20 via-transparent to-transparent"
-              aria-hidden="true"
-            />
+          {/* 🎯 Image Slider with Auto-rotate */}
+          <div className="relative w-full h-[560px] rounded-[2rem] overflow-hidden shadow-2xl shadow-rose-200/50 border-4 border-white">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentImage}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={HERO_IMAGES[currentImage].src}
+                  alt={HERO_IMAGES[currentImage].alt}
+                  fill
+                  priority={currentImage === 0}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-rose-900/40 via-transparent to-transparent"
+                  aria-hidden="true"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Image Caption */}
+            <div className="absolute bottom-6 left-6 z-10">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`caption-${currentImage}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-white/90 backdrop-blur-md rounded-full px-4 py-2 shadow-lg"
+                >
+                  <p className="text-sm font-semibold text-gray-800">
+                    {HERO_IMAGES[currentImage].caption}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* 🎯 Slider Dots */}
+            <div className="absolute bottom-6 right-6 z-10 flex gap-2">
+              {HERO_IMAGES.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  aria-label={`Go to slide ${index + 1}`}
+                  onClick={() => setCurrentImage(index)}
+                  className={`transition-all duration-300 rounded-full ${
+                    currentImage === index
+                      ? "w-8 h-2 bg-white"
+                      : "w-2 h-2 bg-white/60 hover:bg-white/80"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* 🎯 Floating card — Now with DYNAMIC daily number */}
+          {/* 🎯 Floating card — Dynamic daily number */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="absolute -top-5 -right-5 bg-white rounded-2xl px-5 py-4 shadow-xl border border-gray-100"
+            className="absolute -top-5 -right-5 bg-white rounded-2xl px-5 py-4 shadow-xl border border-gray-100 z-20"
           >
             <div className="flex items-center gap-3">
               <div
@@ -192,7 +271,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
-            className="absolute -bottom-6 -left-6 bg-white rounded-2xl px-5 py-4 shadow-xl border border-gray-100 max-w-[240px]"
+            className="absolute -bottom-6 -left-6 bg-white rounded-2xl px-5 py-4 shadow-xl border border-gray-100 max-w-[240px] z-20"
           >
             <div
               className="flex items-center gap-1 mb-2"
@@ -218,7 +297,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 1.3 }}
-            className="absolute bottom-8 right-4 bg-white/90 backdrop-blur rounded-full px-4 py-2 shadow-lg border border-teal-100 flex items-center gap-2"
+            className="absolute top-6 left-6 bg-white/90 backdrop-blur rounded-full px-4 py-2 shadow-lg border border-teal-100 flex items-center gap-2 z-20"
           >
             <ShieldCheck
               size={16}
