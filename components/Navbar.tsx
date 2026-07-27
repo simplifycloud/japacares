@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -53,10 +54,9 @@ export default function Navbar() {
     const el = document.getElementById(id);
 
     if (el) {
-      // 🎯 Automatically detect navbar height + extra breathing space
       const navbar = document.querySelector("nav");
       const navHeight = navbar?.getBoundingClientRect().height || 80;
-      const yOffset = -(navHeight + 20); // +20px extra spacing
+      const yOffset = -(navHeight + 20);
 
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
@@ -72,14 +72,21 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between h-20 px-6 md:px-12">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-200 group-hover:scale-110 transition-transform">
-            <Heart size={18} className="text-white fill-white" />
+        {/* 🎯 Clean Logo Only — No Duplicate Text */}
+        <Link
+          href="/"
+          className="flex items-center group"
+          aria-label="JapaCares - Home"
+        >
+          <div className="relative w-16 h-16 group-hover:scale-105 transition-transform">
+            <Image
+              src="/logo.png"
+              alt="JapaCares - Postpartum Care"
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
-          <h1 className="font-serif text-2xl font-semibold text-gray-900">
-            Japa<span className="italic text-rose-500">Cares</span>
-          </h1>
         </Link>
 
         {/* Desktop Links */}
@@ -122,6 +129,7 @@ export default function Navbar() {
         <button
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden w-10 h-10 rounded-full bg-white/80 backdrop-blur border border-gray-200 flex items-center justify-center"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
