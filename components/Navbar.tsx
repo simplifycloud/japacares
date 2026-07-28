@@ -85,6 +85,7 @@ export default function Navbar() {
               src="/logo.png"
               alt="JapaCares - Postpartum Care"
               fill
+              sizes="64px"
               className="object-contain"
               priority
             />

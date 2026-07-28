@@ -1,12 +1,15 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import Cities from "@/components/Cities";
-import Pricing from "@/components/Pricing";
-import Contact from "@/components/Contact";
-import Leadership from "@/components/Leadership";
-import Reviews from "@/components/Reviews"; // 👈 IMPORT
 import WhatsAppButton from "@/components/WhatsAppButton";
+import dynamic from "next/dynamic";
+
+// 🚀 Lazy load below-the-fold components
+const Services = dynamic(() => import("@/components/Services"));
+const Pricing = dynamic(() => import("@/components/Pricing"));
+const Reviews = dynamic(() => import("@/components/Reviews"));
+const Cities = dynamic(() => import("@/components/Cities"));
+const Leadership = dynamic(() => import("@/components/Leadership"));
+const Contact = dynamic(() => import("@/components/Contact"));
 
 export default function Home() {
   return (
@@ -25,7 +28,6 @@ export default function Home() {
         <Pricing />
       </section>
 
-      {/* 👇 REVIEWS SECTION */}
       <section id="reviews" className="scroll-mt-24">
         <Reviews />
       </section>

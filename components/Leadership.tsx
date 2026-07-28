@@ -39,26 +39,26 @@ export default function Leadership() {
   return (
     <section
       id="leadership"
-      className="relative overflow-hidden bg-gradient-to-b from-[#FDE8E4] via-white to-[#FFF8F3] py-24"
+      className="relative overflow-hidden bg-gradient-to-b from-[#FDE8E4] via-white to-[#FFF8F3] py-16 md:py-24"
     >
-      {/* Background blobs */}
+      {/* Simplified blobs — smaller on mobile */}
       <div
-        className="absolute top-20 left-0 w-[400px] h-[400px] bg-rose-200 rounded-full blur-[140px] opacity-30 pointer-events-none"
+        className="absolute top-20 left-0 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-rose-200 rounded-full blur-[100px] md:blur-[140px] opacity-30 pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-amber-200 rounded-full blur-[140px] opacity-30 pointer-events-none"
+        className="hidden md:block absolute bottom-20 right-0 w-[400px] h-[400px] bg-amber-200 rounded-full blur-[140px] opacity-30 pointer-events-none"
         aria-hidden="true"
       />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-12 md:mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-rose-100 shadow-sm mb-5">
             <Users size={14} className="text-rose-500" aria-hidden="true" />
@@ -74,50 +74,50 @@ export default function Leadership() {
             </span>
           </h2>
 
-          <p className="mt-6 text-lg text-gray-600 leading-relaxed">
+          <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed">
             Three passionate founders united by one mission — to bring loving,
             trusted care to every mother across India.
           </p>
         </motion.div>
 
         {/* Leadership Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {LEADERS.map((leader, i) => (
             <motion.div
               key={leader.name}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group relative"
             >
               <div className="relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-rose-200/50 transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                {/* 🎯 Small decorative corner (not blocking image) */}
+                {/* Decorative corner */}
                 <div
                   className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${leader.bgColor} rounded-full opacity-40 group-hover:scale-125 transition-transform duration-700`}
                   aria-hidden="true"
                 />
 
-                {/* 🎯 Photo — Now SHARP & CRISP */}
-                <div className="relative pt-10 px-8 pb-4">
+                {/* 🎯 Photo — Sharp & Optimized */}
+                <div className="relative pt-8 md:pt-10 px-8 pb-4">
                   <div
-                    className={`relative w-44 h-44 mx-auto rounded-full overflow-hidden ring-4 ${leader.ringColor} shadow-2xl group-hover:scale-105 transition-transform duration-500`}
+                    className={`relative w-40 h-40 md:w-44 md:h-44 mx-auto rounded-full overflow-hidden ring-4 ${leader.ringColor} shadow-2xl group-hover:scale-105 transition-transform duration-500`}
                   >
                     <Image
                       src={leader.image}
                       alt={`${leader.name} - ${leader.role} at JapaCares`}
                       fill
-                      sizes="176px"
+                      sizes="(max-width: 768px) 160px, 176px"
                       className="object-cover"
-                      quality={100}
-                      priority
+                      quality={85}
+                      loading="lazy"
                     />
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="relative p-8 text-center">
-                  <h3 className="font-serif text-2xl font-semibold text-gray-900 mb-2">
+                <div className="relative p-6 md:p-8 text-center">
+                  <h3 className="font-serif text-xl md:text-2xl font-semibold text-gray-900 mb-2">
                     {leader.name}
                   </h3>
                   <div
@@ -142,13 +142,13 @@ export default function Leadership() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 text-center"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-12 md:mt-16 text-center"
         >
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 bg-gray-900 text-white font-semibold px-7 py-4 rounded-full shadow-lg hover:scale-[1.03] transition-all duration-300"
+            className="group inline-flex items-center gap-2 bg-gray-900 text-white font-semibold px-6 md:px-7 py-3 md:py-4 rounded-full shadow-lg hover:scale-[1.03] transition-all duration-300 text-sm md:text-base"
           >
             Learn More About Us
             <ArrowRight
