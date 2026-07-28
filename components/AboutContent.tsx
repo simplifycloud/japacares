@@ -86,7 +86,7 @@ const VALUES = [
 ];
 
 const STATS = [
-  { icon: Users, value: "2,000+", label: "Happy Mothers", color: "text-rose-500" },
+  { icon: Users, value: "1,000+", label: "Happy Mothers", color: "text-rose-500" },
   { icon: MapPin, value: "6+", label: "Cities Served", color: "text-amber-500" },
   { icon: Award, value: "1,300+", label: "Verified Caregivers", color: "text-teal-500" },
   { icon: TrendingUp, value: "4.9/5", label: "Average Rating", color: "text-purple-500" },

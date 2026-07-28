@@ -7,8 +7,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const STATS = [
-  { icon: Heart, label: "Happy Mothers", value: "2000+" },
-  { icon: Star, label: "Avg. Rating", value: "4.9" },
+  { icon: Heart, label: "Happy Mothers", value: "1000+" },
+  { icon: Star, label: "Avg. Rating", value: "4.5" },
   { icon: ShieldCheck, label: "Verified", value: "100%" },
 ];
 
@@ -105,7 +105,7 @@ export default function Hero() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
             </span>
             <span className="text-xs font-semibold text-gray-700 tracking-wide">
-              TRUSTED BY 2,000+ FAMILIES ACROSS INDIA
+              TRUSTED BY 1,000+ FAMILIES ACROSS INDIA
             </span>
           </div>
 
