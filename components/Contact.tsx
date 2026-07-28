@@ -78,7 +78,7 @@ export default function Contact() {
               </div>
               <p className="text-xs font-semibold text-gray-500 tracking-wide uppercase">Email Us</p>
               <a href="mailto:hello@japacares.com" className="font-serif text-xl font-semibold text-gray-900 hover:text-rose-600 transition mt-1 block">
-                hello@japacares.com
+                support@japacares.com
               </a>
               <p className="text-sm text-gray-500 mt-2">We reply within 2 hours</p>
             </motion.div>
