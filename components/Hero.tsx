@@ -7,8 +7,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const STATS = [
-  { icon: Heart, label: "Happy Mothers", value: "2000+" },
-  { icon: Star, label: "Avg. Rating", value: "4.9" },
+  { icon: Heart, label: "Happy Mothers", value: "1000+" },
+  { icon: Star, label: "Avg. Rating", value: "4.5" },
   { icon: ShieldCheck, label: "Verified", value: "100%" },
 ];
 
@@ -63,7 +63,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F3] via-[#FFF3EC] to-[#FDE8E4] min-h-screen flex items-center">
-      {/* Simplified blobs — fewer on mobile */}
+      
       <div
         className="absolute top-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-rose-200 rounded-full blur-[100px] md:blur-[140px] opacity-40 pointer-events-none"
         aria-hidden="true"
@@ -73,7 +73,6 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Dot pattern — only desktop */}
       <div
         className="hidden md:block absolute inset-0 opacity-[0.15]"
         style={{
@@ -84,6 +83,7 @@ export default function Hero() {
       />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 grid md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
+        
         {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -95,6 +95,7 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
             </span>
+            {/* ✅ Conflict hata diya — aapka version rakha */}
             <span className="text-[10px] md:text-xs font-semibold text-gray-700 tracking-wide">
               TRUSTED BY 2,000+ FAMILIES
             </span>
@@ -175,8 +176,8 @@ export default function Hero() {
                   src={HERO_IMAGES[currentImage].src}
                   alt={HERO_IMAGES[currentImage].alt}
                   fill
-                  priority={currentImage === 0}
-                  loading={currentImage === 0 ? "eager" : "lazy"}
+                  priority={currentImage === 2}
+                  loading={currentImage === 2 ? "eager" : "lazy"}
                   quality={75}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
@@ -213,21 +214,26 @@ export default function Hero() {
                   aria-label={`Go to slide ${index + 1}`}
                   onClick={() => setCurrentImage(index)}
                   className={`transition-all duration-300 rounded-full ${
-                    currentImage === index ? "w-6 md:w-8 h-2 bg-white" : "w-2 h-2 bg-white/60"
+                    currentImage === index
+                      ? "w-6 md:w-8 h-2 bg-white"
+                      : "w-2 h-2 bg-white/60"
                   }`}
                 />
               ))}
             </div>
           </div>
 
-          {/* Floating cards */}
+          {/* Floating Card — Top Right */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.7 }}
             className="hidden sm:flex absolute -top-3 md:-top-5 -right-3 md:-right-5 bg-white rounded-2xl px-3 md:px-5 py-2 md:py-4 shadow-xl border border-gray-100 z-20 items-center gap-2 md:gap-3"
           >
-            <div className="w-8 md:w-11 h-8 md:h-11 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white shadow-md" aria-hidden="true">
+            <div
+              className="w-8 md:w-11 h-8 md:h-11 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white shadow-md"
+              aria-hidden="true"
+            >
               <Heart size={14} fill="white" />
             </div>
             <div>
@@ -238,6 +244,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
+          {/* Floating Card — Bottom Left */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -246,7 +253,12 @@ export default function Hero() {
           >
             <div className="flex items-center gap-1 mb-2" aria-label="5 star rating">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={13} className="text-amber-400 fill-amber-400" aria-hidden="true" />
+                <Star
+                  key={i}
+                  size={13}
+                  className="text-amber-400 fill-amber-400"
+                  aria-hidden="true"
+                />
               ))}
             </div>
             <p className="font-serif text-sm text-gray-800 italic leading-snug">
@@ -255,6 +267,7 @@ export default function Hero() {
             <p className="text-xs text-gray-500 mt-2">— Priya, Mumbai</p>
           </motion.div>
 
+          {/* Floating Badge — Top Left */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -262,7 +275,9 @@ export default function Hero() {
             className="absolute top-3 md:top-6 left-3 md:left-6 bg-white/90 backdrop-blur rounded-full px-3 md:px-4 py-1.5 md:py-2 shadow-lg border border-teal-100 flex items-center gap-1.5 md:gap-2 z-20"
           >
             <ShieldCheck size={14} className="text-teal-600" aria-hidden="true" />
-            <span className="text-[10px] md:text-xs font-semibold text-gray-800">100% Verified</span>
+            <span className="text-[10px] md:text-xs font-semibold text-gray-800">
+              100% Verified
+            </span>
           </motion.div>
         </motion.div>
       </div>
