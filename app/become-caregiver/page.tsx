@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   User, Phone, Mail, MapPin, Calendar, FileText,
   ShieldCheck, Briefcase, Award, Clock, Upload,
@@ -64,7 +65,6 @@ export default function BecomeCaregiver() {
   const allConsentsChecked = privacyConsent && dataConsent && ageConsent;
   const canSubmit = allAgreementsChecked && allConsentsChecked;
 
-  // ✅ UPDATED SUBMIT — Formspree + Resend Email
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -77,7 +77,6 @@ export default function BecomeCaregiver() {
     setLoading(true);
 
     try {
-      // 1️⃣ Formspree — Admin ko email
       const res = await fetch("https://formspree.io/f/mqernqrj", {
         method: "POST",
         headers: {
@@ -109,32 +108,7 @@ export default function BecomeCaregiver() {
       });
 
       if (res.ok) {
-        // 2️⃣ ✅ Resend — Customer ko confirmation email
-        if (form.email) {
-          try {
-            await fetch("/api/send-customer-email", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                name: form.name,
-                email: form.email,
-                city: form.city,
-                experience: form.experience,
-                availability: form.availability,
-                mobile: form.mobile,
-              }),
-            });
-          } catch {
-            // Email fail hogi to bhi form submit hoga
-            console.log("Customer email failed but form submitted");
-          }
-        }
-
-        // 3️⃣ Success screen
         setSubmitted(true);
-
       } else {
         const data = await res.json();
         setError(data?.error || "Something went wrong. Please try again.");
@@ -191,20 +165,12 @@ export default function BecomeCaregiver() {
             Thank you,{" "}
             <span className="text-pink-600 font-semibold">{form.name}</span>!
           </p>
-          <p className="text-gray-500 mb-2">
+          <p className="text-gray-500 mb-8">
             Our team will contact you on{" "}
             <span className="text-pink-600 font-semibold">{form.mobile}</span>{" "}
             within{" "}
             <span className="font-semibold text-gray-700">48 hours</span>.
           </p>
-
-          {/* ✅ Email confirmation message */}
-          {form.email && (
-            <p className="text-gray-500 mb-8">
-              A confirmation email has been sent to{" "}
-              <span className="text-pink-600 font-semibold">{form.email}</span> ✅
-            </p>
-          )}
 
           <div className="bg-pink-50 rounded-2xl p-5 mb-8 text-left space-y-2">
             <p className="font-semibold text-gray-700 mb-3">What happens next?</p>
@@ -233,39 +199,63 @@ export default function BecomeCaregiver() {
             </p>
           </div>
 
-          <button
-            onClick={() => {
-              setSubmitted(false);
-              setForm({
-                name: "", mobile: "", whatsapp: "", email: "",
-                city: "", address: "", age: "", experience: "",
-                qualification: "", languages: "", availability: "",
-                remarks: "",
-                emergencyName: "", emergencyPhone: "", emergencyRelation: "",
-              });
-              setSelectedServices([]);
-              setUploadedDocs({});
-              setAgreements({
-                backgroundCheck: false,
-                policeVerification: false,
-                termsConditions: false,
-                codeOfConduct: false,
-              });
-              setPrivacyConsent(false);
-              setDataConsent(false);
-              setAgeConsent(false);
-            }}
-            className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-semibold transition"
-          >
-            Submit Another Application
-          </button>
+          {/* BUTTONS */}
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/"
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3.5 rounded-2xl font-semibold transition flex items-center justify-center gap-2"
+            >
+              🏠 Go to Homepage
+            </Link>
+
+            <button
+              onClick={() => {
+                setSubmitted(false);
+                setForm({
+                  name: "", mobile: "", whatsapp: "", email: "",
+                  city: "", address: "", age: "", experience: "",
+                  qualification: "", languages: "", availability: "",
+                  remarks: "",
+                  emergencyName: "", emergencyPhone: "", emergencyRelation: "",
+                });
+                setSelectedServices([]);
+                setUploadedDocs({});
+                setAgreements({
+                  backgroundCheck: false,
+                  policeVerification: false,
+                  termsConditions: false,
+                  codeOfConduct: false,
+                });
+                setPrivacyConsent(false);
+                setDataConsent(false);
+                setAgeConsent(false);
+              }}
+              className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3.5 rounded-2xl font-semibold transition"
+            >
+              Submit Another Application
+            </button>
+          </div>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-orange-50 py-20 px-5">
+    <section className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-orange-50 py-10 px-5">
+
+      {/* ✅ BACK TO HOME BUTTON — Same as Book Caregiver */}
+      <div className="max-w-3xl mx-auto mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 bg-white hover:bg-pink-50 text-gray-700 hover:text-pink-600 font-semibold px-5 py-3 rounded-full shadow-md border border-gray-200 transition-all hover:shadow-lg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Home
+        </Link>
+      </div>
+
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl p-8 md:p-12">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-pink-600">
           Become a Jaapa Caregiver
@@ -274,7 +264,6 @@ export default function BecomeCaregiver() {
           Join our network of verified caregivers and help new mothers across India.
         </p>
 
-        {/* Trust Badges */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
           {[
             { icon: ShieldCheck, label: "Verified Profile" },
@@ -345,24 +334,14 @@ export default function BecomeCaregiver() {
             </div>
           </div>
 
-          {/* ✅ Email Required kar diya */}
           <div>
-            <label className="font-medium mb-2 block">Email Address *</label>
+            <label className="font-medium mb-2 block">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-4 top-4 text-gray-400" size={20} />
-              <input
-                required
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="name@email.com"
-                className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-pink-500 outline-none"
-              />
+              <input type="email" name="email" value={form.email}
+                onChange={handleChange} placeholder="name@email.com"
+                className="w-full border rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-pink-500 outline-none" />
             </div>
-            <p className="text-xs text-gray-400 mt-1 ml-1">
-              ✅ Confirmation email will be sent here
-            </p>
           </div>
 
           <div>
@@ -587,12 +566,6 @@ export default function BecomeCaregiver() {
                   <strong>Aadhaar Act 2016</strong>, we do <strong>NOT</strong> collect
                   Aadhaar numbers, PAN numbers, or any sensitive identity numbers online.
                 </p>
-                <p>
-                  Identity verification will be conducted{" "}
-                  <strong>securely in-person</strong> or via{" "}
-                  <strong>government-authorized DigiLocker verification</strong> during
-                  the final onboarding stage.
-                </p>
                 <ul className="list-disc list-inside space-y-1 mt-2">
                   <li>We only collect basic contact & professional information here</li>
                   <li>No sensitive ID numbers are stored online</li>
@@ -607,7 +580,6 @@ export default function BecomeCaregiver() {
             <h2 className="text-xl font-bold text-gray-700">Document Upload</h2>
             <p className="text-sm text-gray-500 mt-1">
               Upload basic documents only — JPG, PNG, PDF accepted (Max 5MB each).
-              Identity documents will be verified in-person later.
             </p>
           </div>
 
@@ -662,9 +634,6 @@ export default function BecomeCaregiver() {
 
           <div className="border-b pb-2 mt-4">
             <h2 className="text-xl font-bold text-gray-700">Emergency Contact</h2>
-            <p className="text-sm text-gray-500 mt-1">
-              A trusted person we can contact in case of emergency
-            </p>
           </div>
 
           <div>
@@ -762,9 +731,7 @@ export default function BecomeCaregiver() {
           </div>
 
           <div className="border-b pb-2 mt-4">
-            <h2 className="text-xl font-bold text-gray-700">
-              📋 Privacy & Data Consent
-            </h2>
+            <h2 className="text-xl font-bold text-gray-700">📋 Privacy & Data Consent</h2>
             <p className="text-sm text-gray-500 mt-1">
               Required under Digital Personal Data Protection Act 2023 (DPDPA)
             </p>
@@ -789,9 +756,7 @@ export default function BecomeCaregiver() {
                   <a href="/privacy-policy" target="_blank" className="text-pink-600 underline font-medium">
                     Privacy Policy
                   </a>
-                  . I understand how my personal data will be collected, stored, and processed.
-                  I know I can withdraw my consent or request data deletion at any time by
-                  contacting{" "}
+                  . I can withdraw consent or request data deletion anytime by contacting{" "}
                   <span className="text-pink-600 font-medium">privacy@japacares.com</span>.
                 </p>
               </div>
@@ -809,10 +774,6 @@ export default function BecomeCaregiver() {
                     ? <CheckCircle2 size={16} className="text-green-500" />
                     : <AlertCircle size={16} className="text-gray-400" />}
                   Data Collection & Processing Consent *
-                </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  I voluntarily provide my personal information for the purpose of applying
-                  as a Jaapa caregiver. I understand that:
                 </p>
                 <ul className="text-sm text-gray-500 mt-2 list-disc list-inside space-y-1">
                   <li>My data will only be used for caregiver verification and job matching</li>
@@ -837,8 +798,8 @@ export default function BecomeCaregiver() {
                   Age Confirmation *
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
-                  I confirm that I am <strong>18 years or older</strong> and I am legally
-                  eligible to provide consent for data processing as per Indian law.
+                  I confirm that I am <strong>18 years or older</strong> and legally
+                  eligible to provide consent as per Indian law.
                 </p>
               </div>
             </label>
@@ -849,8 +810,7 @@ export default function BecomeCaregiver() {
               <span>Completion Progress</span>
               <span>
                 {Object.values(agreements).filter(Boolean).length +
-                  [privacyConsent, dataConsent, ageConsent].filter(Boolean).length}{" "}
-                / 7 Completed
+                  [privacyConsent, dataConsent, ageConsent].filter(Boolean).length} / 7 Completed
               </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
