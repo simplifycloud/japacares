@@ -22,11 +22,11 @@ const CITIES = [
     image: "https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=600&auto=format&fit=crop",
     tag: "Millennium City",
   },
- {
-  name: "Noida",
-  caregivers: "150+",
-  image: "https://picsum.photos/seed/noida/800/600",
-  tag: "Tech Hub",
+  {
+    name: "Noida",
+    caregivers: "150+",
+    image: "https://picsum.photos/seed/noida/800/600",
+    tag: "Tech Hub",
   },
   {
     name: "Agra",
@@ -40,19 +40,36 @@ const CITIES = [
     image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop",
     tag: "Financial Capital",
   },
-  
 ];
 
 export default function Cities() {
-  return (
-    <section id="cities" className="relative overflow-hidden bg-gradient-to-b from-[#FFF8F3] via-white to-[#FDE8E4] py-24">
+  // 🎯 Request City Handler — Opens WhatsApp with pre-filled message
+  const handleRequestCity = () => {
+    const phone = "918239548307"; // Your WhatsApp number without +
+    const message = `Hi JapaCares! 👋
 
+I would like to request Jaapa caregiver services in my city.
+
+• My City: 
+• My Name: 
+• My Mobile:
+
+Please let me know when your services will be available in my area. Thank you! 💕`;
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+  return (
+    <section
+      id="cities"
+      className="relative overflow-hidden bg-gradient-to-b from-[#FFF8F3] via-white to-[#FDE8E4] py-24"
+    >
       {/* Background blobs */}
       <div className="absolute top-20 left-0 w-[400px] h-[400px] bg-rose-200 rounded-full blur-[140px] opacity-30 pointer-events-none" />
       <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-amber-200 rounded-full blur-[140px] opacity-30 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -76,8 +93,8 @@ export default function Cities() {
           </h2>
 
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            Verified Jaapa caregivers now available in your city.
-            Compassionate care, wherever you call home.
+            Verified Jaapa caregivers now available in your city. Compassionate
+            care, wherever you call home.
           </p>
         </motion.div>
 
@@ -126,7 +143,7 @@ export default function Cities() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA — Now Working! */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -143,7 +160,10 @@ export default function Cities() {
                 We're expanding fast. Request care in your area.
               </p>
             </div>
-            <button className="group flex items-center gap-2 bg-gray-900 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 whitespace-nowrap">
+            <button
+              onClick={handleRequestCity}
+              className="group flex items-center gap-2 bg-gray-900 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 whitespace-nowrap"
+            >
               Request City
               <ArrowUpRight
                 size={16}

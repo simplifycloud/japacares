@@ -4,19 +4,44 @@ import Services from "@/components/Services";
 import Cities from "@/components/Cities";
 import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
+import Leadership from "@/components/Leadership";
+import Reviews from "@/components/Reviews"; // 👈 IMPORT
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
   return (
     <main className="overflow-x-hidden">
       <Navbar />
-      <section id="home">
+
+      <section id="home" className="scroll-mt-24">
         <Hero />
       </section>
-      <Services />
-      <Pricing />
-      <Cities />
-      <Contact />
+
+      <section id="services" className="scroll-mt-24">
+        <Services />
+      </section>
+
+      <section id="pricing" className="scroll-mt-24">
+        <Pricing />
+      </section>
+
+      {/* 👇 REVIEWS SECTION */}
+      <section id="reviews" className="scroll-mt-24">
+        <Reviews />
+      </section>
+
+      <section id="cities" className="scroll-mt-24">
+        <Cities />
+      </section>
+
+      <section id="leadership" className="scroll-mt-24">
+        <Leadership />
+      </section>
+
+      <section id="contact" className="scroll-mt-24">
+        <Contact />
+      </section>
+
       <WhatsAppButton />
     </main>
   );
