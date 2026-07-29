@@ -111,7 +111,7 @@ export const metadata: Metadata = {
   
   // ✅ Google Search Console Verification (add later)
   verification: {
-    // google: "your-verification-code-here",
+     google: " google59c9835756a05497.html",
   },
 
   // 📝 Format detection
