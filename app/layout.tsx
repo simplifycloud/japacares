@@ -108,12 +108,7 @@ export const metadata: Metadata = {
   category: "Healthcare",
 
   // 🎨 Icons (add these files to /public folder)
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-
+  
   // ✅ Google Search Console Verification (add later)
   verification: {
     // google: "your-verification-code-here",

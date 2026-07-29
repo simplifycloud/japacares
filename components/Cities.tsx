@@ -43,16 +43,15 @@ const CITIES = [
 ];
 
 export default function Cities() {
-  // 🎯 Request City Handler — Opens WhatsApp with pre-filled message
   const handleRequestCity = () => {
-    const phone = "918239548307"; // Your WhatsApp number without +
+    const phone = "918239548307";
     const message = `Hi JapaCares! 👋
 
 I would like to request Jaapa caregiver services in my city.
 
-• My City: 
-• My Name: 
-• My Mobile:
+- My City: 
+- My Name: 
+- My Mobile:
 
 Please let me know when your services will be available in my area. Thank you! 💕`;
 
@@ -65,12 +64,11 @@ Please let me know when your services will be available in my area. Thank you! �
       id="cities"
       className="relative overflow-hidden bg-gradient-to-b from-[#FFF8F3] via-white to-[#FDE8E4] py-24"
     >
-      {/* Background blobs */}
-      <div className="absolute top-20 left-0 w-[400px] h-[400px] bg-rose-200 rounded-full blur-[140px] opacity-30 pointer-events-none" />
-      <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-amber-200 rounded-full blur-[140px] opacity-30 pointer-events-none" />
+      {/* Background blobs — responsive sizing to match Hero/Leadership */}
+      <div className="w-[250px] md:w-[400px] h-[250px] md:h-[400px] absolute top-20 left-0 bg-rose-200 rounded-full blur-[100px] md:blur-[140px] opacity-30 pointer-events-none" />
+      <div className="hidden md:block absolute bottom-20 right-0 w-[400px] h-[400px] bg-amber-200 rounded-full blur-[140px] opacity-30 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -98,7 +96,6 @@ Please let me know when your services will be available in my area. Thank you! �
           </p>
         </motion.div>
 
-        {/* Cities Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {CITIES.map((city, i) => (
             <motion.div
@@ -113,6 +110,7 @@ Please let me know when your services will be available in my area. Thank you! �
                 <img
                   src={city.image}
                   alt={city.name}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent" />
@@ -143,7 +141,6 @@ Please let me know when your services will be available in my area. Thank you! �
           ))}
         </div>
 
-        {/* Bottom CTA — Now Working! */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

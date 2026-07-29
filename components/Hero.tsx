@@ -63,7 +63,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F3] via-[#FFF3EC] to-[#FDE8E4] min-h-screen flex items-center">
-      
+
       <div
         className="absolute top-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-rose-200 rounded-full blur-[100px] md:blur-[140px] opacity-40 pointer-events-none"
         aria-hidden="true"
@@ -83,7 +83,7 @@ export default function Hero() {
       />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 grid md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
-        
+
         {/* LEFT CONTENT */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,6 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
             </span>
-            {/* ✅ Conflict hata diya — aapka version rakha */}
             <span className="text-[10px] md:text-xs font-semibold text-gray-700 tracking-wide">
               TRUSTED BY 2,000+ FAMILIES
             </span>
@@ -163,31 +162,25 @@ export default function Hero() {
           className="relative"
         >
           <div className="relative w-full h-[400px] md:h-[560px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl shadow-rose-200/50 border-4 border-white">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentImage}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="absolute inset-0"
-              >
-                <Image
-                  src={HERO_IMAGES[currentImage].src}
-                  alt={HERO_IMAGES[currentImage].alt}
-                  fill
-                  priority={currentImage === 2}
-                  loading={currentImage === 2 ? "eager" : "lazy"}
-                  quality={75}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-rose-900/40 via-transparent to-transparent"
-                  aria-hidden="true"
-                />
-              </motion.div>
-            </AnimatePresence>
+            {/* 🎯 FIX: all 4 images mounted upfront, switched via opacity — no refetch on rotation */}
+            {HERO_IMAGES.map((img, i) => (
+              <Image
+                key={img.src}
+                src={img.src}
+                alt={img.alt}
+                fill
+                priority={i === 0}
+                quality={75}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={`object-cover absolute inset-0 transition-opacity duration-700 ${
+                  i === currentImage ? "opacity-100 z-0" : "opacity-0 -z-10"
+                }`}
+              />
+            ))}
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-rose-900/40 via-transparent to-transparent"
+              aria-hidden="true"
+            />
 
             <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 z-10">
               <AnimatePresence mode="wait">

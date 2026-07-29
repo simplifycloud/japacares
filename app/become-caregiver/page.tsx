@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   User, Phone, Mail, MapPin, Calendar, FileText,
-  ShieldCheck, Briefcase, Award, Clock, Upload,
-  Home, Camera, AlertCircle, CheckCircle2,
+  ShieldCheck, Briefcase, Award, Clock,
+  AlertCircle, CheckCircle2,
 } from "lucide-react";
 
 export default function BecomeCaregiver() {
@@ -18,7 +18,6 @@ export default function BecomeCaregiver() {
   });
 
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [uploadedDocs, setUploadedDocs] = useState<Record<string, string>>({});
   const [agreements, setAgreements] = useState({
     backgroundCheck: false,
     policeVerification: false,
@@ -45,16 +44,6 @@ export default function BecomeCaregiver() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleFileUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    docName: string
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setUploadedDocs({ ...uploadedDocs, [docName]: file.name });
-    }
   };
 
   const handleAgreementChange = (key: keyof typeof agreements) => {
@@ -100,7 +89,6 @@ export default function BecomeCaregiver() {
           emergencyPhone: form.emergencyPhone,
           emergencyRelation: form.emergencyRelation,
           remarks: form.remarks,
-          uploadedDocs: Object.keys(uploadedDocs).join(", "),
           privacyConsentGiven: "Yes",
           dataConsentGiven: "Yes",
           ageConsentGiven: "Yes",
@@ -119,37 +107,6 @@ export default function BecomeCaregiver() {
       setLoading(false);
     }
   };
-
-  const documents = [
-    {
-      key: "addressProof",
-      label: "Address Proof",
-      icon: <Home size={20} className="text-green-500" />,
-      required: true,
-      hint: "Electricity bill / Ration card / Voter ID",
-    },
-    {
-      key: "photo",
-      label: "Recent Passport Photo",
-      icon: <Camera size={20} className="text-orange-500" />,
-      required: true,
-      hint: "Clear front-facing photo on white background",
-    },
-    {
-      key: "qualificationCert",
-      label: "Qualification Certificate",
-      icon: <Award size={20} className="text-purple-500" />,
-      required: false,
-      hint: "ANM / GNM / Nursing degree if available",
-    },
-    {
-      key: "experienceLetter",
-      label: "Experience Letter",
-      icon: <Briefcase size={20} className="text-indigo-500" />,
-      required: false,
-      hint: "Reference letter from previous employer",
-    },
-  ];
 
   // ✅ SUCCESS SCREEN
   if (submitted) {
@@ -176,9 +133,6 @@ export default function BecomeCaregiver() {
             <p className="font-semibold text-gray-700 mb-3">What happens next?</p>
             <div className="flex items-center gap-3 text-sm text-gray-600">
               <span className="text-pink-500">✅</span> Application received
-            </div>
-            <div className="flex items-center gap-3 text-sm text-gray-600">
-              <span className="text-yellow-500">⏳</span> Document verification (24–48 hrs)
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-600">
               <span className="text-blue-500">📞</span> Our team will call you
@@ -219,7 +173,6 @@ export default function BecomeCaregiver() {
                   emergencyName: "", emergencyPhone: "", emergencyRelation: "",
                 });
                 setSelectedServices([]);
-                setUploadedDocs({});
                 setAgreements({
                   backgroundCheck: false,
                   policeVerification: false,
@@ -243,7 +196,7 @@ export default function BecomeCaregiver() {
   return (
     <section className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-orange-50 py-10 px-5">
 
-      {/* ✅ BACK TO HOME BUTTON — Same as Book Caregiver */}
+      {/* BACK TO HOME BUTTON */}
       <div className="max-w-3xl mx-auto mb-6">
         <Link
           href="/"
@@ -566,70 +519,19 @@ export default function BecomeCaregiver() {
                   <strong>Aadhaar Act 2016</strong>, we do <strong>NOT</strong> collect
                   Aadhaar numbers, PAN numbers, or any sensitive identity numbers online.
                 </p>
+                <p>
+                  📎 Documents (address proof, photo, certificates) will be collected
+                  by our team via WhatsApp during your verification call — not through
+                  this form.
+                </p>
                 <ul className="list-disc list-inside space-y-1 mt-2">
                   <li>We only collect basic contact & professional information here</li>
-                  <li>No sensitive ID numbers are stored online</li>
+                  <li>No sensitive ID numbers or documents are collected online</li>
                   <li>All data is encrypted and processed in India</li>
                   <li>You can request data deletion anytime</li>
                 </ul>
               </div>
             </div>
-          </div>
-
-          <div className="border-b pb-2 mt-4">
-            <h2 className="text-xl font-bold text-gray-700">Document Upload</h2>
-            <p className="text-sm text-gray-500 mt-1">
-              Upload basic documents only — JPG, PNG, PDF accepted (Max 5MB each).
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {documents.map((doc) => (
-              <div key={doc.key}
-                className={`border-2 rounded-xl p-4 transition-all ${
-                  uploadedDocs[doc.key]
-                    ? "border-green-400 bg-green-50"
-                    : "border-gray-200 hover:border-pink-300"
-                }`}>
-                <div className="flex items-center justify-between flex-wrap gap-3">
-                  <div className="flex items-center gap-3">
-                    {doc.icon}
-                    <div>
-                      <p className="font-medium text-gray-800">
-                        {doc.label}
-                        {doc.required && <span className="text-pink-500 ml-1">*</span>}
-                      </p>
-                      <p className="text-xs text-gray-400">{doc.hint}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    {uploadedDocs[doc.key] ? (
-                      <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
-                        <CheckCircle2 size={18} />
-                        <span className="max-w-[140px] truncate">{uploadedDocs[doc.key]}</span>
-                      </div>
-                    ) : (
-                      <label className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-medium px-4 py-2 rounded-lg cursor-pointer transition">
-                        <Upload size={16} />
-                        Upload
-                        <input type="file" accept=".jpg,.jpeg,.png,.pdf"
-                          className="hidden"
-                          onChange={(e) => handleFileUpload(e, doc.key)} />
-                      </label>
-                    )}
-                    {uploadedDocs[doc.key] && (
-                      <label className="flex items-center gap-1 text-sm text-pink-600 hover:text-pink-800 cursor-pointer font-medium">
-                        <Upload size={14} />
-                        Re-upload
-                        <input type="file" accept=".jpg,.jpeg,.png,.pdf"
-                          className="hidden"
-                          onChange={(e) => handleFileUpload(e, doc.key)} />
-                      </label>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
 
           <div className="border-b pb-2 mt-4">
