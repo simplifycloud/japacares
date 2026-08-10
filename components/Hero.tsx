@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Star, Heart } from "lucide-react";
+import { ArrowRight, ShieldCheck, Star, Heart, HandHeart } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -161,7 +161,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative"
         >
-          <div className="relative w-full h-[400px] md:h-[560px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl shadow-rose-200/50 border-4 border-white">
+          <div className="relative w-full h-[400px] md:h-[560px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl shadow-rose-300/50 border-4 border-white">
             {/* 🎯 FIX: all 4 images mounted upfront, switched via opacity — no refetch on rotation */}
             {HERO_IMAGES.map((img, i) => (
               <Image
@@ -177,10 +177,7 @@ export default function Hero() {
                 }`}
               />
             ))}
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-rose-900/40 via-transparent to-transparent"
-              aria-hidden="true"
-            />
+            
 
             <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 z-10">
               <AnimatePresence mode="wait">
