@@ -146,17 +146,6 @@ export default function Leadership() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-12 md:mt-16 text-center"
         >
-          <Link
-            href="/about"
-            className="group inline-flex items-center gap-2 bg-gray-900 text-white font-semibold px-6 md:px-7 py-3 md:py-4 rounded-full shadow-lg hover:scale-[1.03] transition-all duration-300 text-sm md:text-base"
-          >
-            Learn More About Us
-            <ArrowRight
-              size={18}
-              className="group-hover:translate-x-1 transition-transform"
-              aria-hidden="true"
-            />
-          </Link>
         </motion.div>
       </div>
     </section>

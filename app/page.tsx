@@ -1,6 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import BookingModal from "@/components/BookingModal";
 import dynamic from "next/dynamic";
 
 // 🚀 Lazy load below-the-fold components
@@ -12,12 +16,14 @@ const Leadership = dynamic(() => import("@/components/Leadership"));
 const Contact = dynamic(() => import("@/components/Contact"));
 
 export default function Home() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <main className="overflow-x-hidden">
       <Navbar />
 
       <section id="home" className="scroll-mt-24">
-        <Hero />
+        <Hero onOpenBooking={() => setIsBookingOpen(true)} />
       </section>
 
       <section id="services" className="scroll-mt-24">
@@ -45,6 +51,12 @@ export default function Home() {
       </section>
 
       <WhatsAppButton />
+
+      {/* 🎯 Interactive Booking Summary Modal */}
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+      />
     </main>
   );
 }
