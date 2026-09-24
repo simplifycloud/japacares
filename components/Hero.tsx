@@ -101,7 +101,7 @@ export default function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) 
           </h1>
 
           <p className="mt-6 md:mt-8 text-base md:text-lg text-gray-600 leading-relaxed max-w-lg">
-            Verified Jaapa caregivers offering compassionate postpartum support
+            Verified Japa caregivers offering compassionate postpartum support
             — right at your doorstep. 💕
           </p>
 
