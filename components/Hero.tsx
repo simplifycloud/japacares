@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Star, Heart, HandHeart } from "lucide-react";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const STATS = [
@@ -72,15 +73,6 @@ export default function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) 
         aria-hidden="true"
       />
 
-      <div
-        className="hidden md:block absolute inset-0 opacity-[0.15] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(#d97757 1px, transparent 1px)`,
-          backgroundSize: "32px 32px",
-        }}
-        aria-hidden="true"
-      />
-
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16 grid md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
         {/* LEFT CONTENT */}
         <motion.div
@@ -113,14 +105,15 @@ export default function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) 
             — right at your doorstep. 💕
           </p>
 
-          {/* 🎯 BUTTONS TRIGGER BOOKING MODAL */}
+          {/* 🎯 BUTTONS FIXED HERE */}
           <div className="flex flex-wrap gap-3 md:gap-4 mt-8 md:mt-10">
+            {/* 1. Book a Caregiver -> Opens Modal */}
             <button
               type="button"
               onClick={onOpenBooking}
-              className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-rose-600 text-white font-semibold px-6 md:px-8 py-3.5 md:py-4 rounded-full shadow-lg text-sm md:text-base transition-all duration-300 hover:scale-105"
+              className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-rose-600 text-white font-semibold px-6 md:px-7 py-3.5 md:py-4 rounded-full shadow-lg text-sm md:text-base transition-all duration-300 hover:scale-105 cursor-pointer"
             >
-              Book a Caregiver
+              <span>Book a Caregiver</span>
               <ArrowRight
                 size={16}
                 className="group-hover:translate-x-1 transition-transform"
@@ -128,13 +121,13 @@ export default function Hero({ onOpenBooking }: { onOpenBooking?: () => void }) 
               />
             </button>
 
-            <button
-              type="button"
-              onClick={onOpenBooking}
-              className="inline-flex items-center gap-2 px-6 md:px-8 py-3.5 md:py-4 rounded-full font-semibold bg-white/90 backdrop-blur border border-gray-200 text-gray-800 hover:border-rose-300 text-sm md:text-base transition-all hover:scale-105 shadow-sm"
+            {/* 2. Become a Caregiver -> Direct Page Redirect to /become-caregiver */}
+            <Link
+              href="/become-caregiver"
+              className="inline-flex items-center gap-2 px-6 md:px-7 py-3.5 md:py-4 rounded-full font-semibold bg-white/90 backdrop-blur border border-gray-200 text-gray-800 hover:border-rose-300 hover:text-rose-600 text-sm md:text-base transition-all hover:scale-105 shadow-sm"
             >
               Become a Caregiver
-            </button>
+            </Link>
           </div>
 
           {/* STATS */}

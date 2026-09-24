@@ -2,58 +2,50 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle2, ChevronRight, Sparkles, MapPin, Calendar, Clock, User, Briefcase, HeartHandshake } from "lucide-react";
+import {
+  X,
+  CheckCircle2,
+  ChevronRight,
+  Sparkles,
+  MapPin,
+  Calendar,
+  Clock,
+  User,
+  ShieldCheck,
+} from "lucide-react";
 
 const WHATSAPP_NUMBER = "918239548307";
 
-export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [userType, setUserType] = useState<"client" | "caregiver">("client");
+export default function BookingModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const [step, setStep] = useState(1);
-
-  // Client Data
-  const [clientData, setClientData] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     city: "Delhi NCR",
-    shift: "24/7 Live-in Caregiver",
-    deliveryStatus: "Expecting within 1 month",
-  });
-
-  // Caregiver Data
-  const [caregiverData, setCaregiverData] = useState({
-    name: "",
-    city: "Delhi NCR",
-    experience: "2 to 5 Years Experience",
-    workType: "24/7 Live-in Work",
+    shift: "24/7 Live-in Caregiver (Full Stay)",
+    deliveryStatus: "Expecting within 1 Month",
   });
 
   if (!isOpen) return null;
 
   const handleSendToWhatsApp = () => {
-    let summaryMessage = "";
-
-    if (userType === "client") {
-      summaryMessage = 
-`🌸 *NEW JAPACARES BOOKING INQUIRY* 🌸
+    const summaryMessage = `🌸 *NEW JAPACARES BOOKING INQUIRY* 🌸
 ------------------------------------
-👤 *Customer Name:* ${clientData.name || 'Not provided'}
-📍 *City/Location:* ${clientData.city}
-⏰ *Care Requirement:* ${clientData.shift}
-📅 *Delivery Status:* ${clientData.deliveryStatus}
+👤 *Customer Name:* ${formData.name || "Not provided"}
+📍 *City/Location:* ${formData.city}
+⏰ *Care Requirement:* ${formData.shift}
+📅 *Delivery Status:* ${formData.deliveryStatus}
 
 💬 *Request:* Please share verified caregiver profiles and exact pricing details.`;
-    } else {
-      summaryMessage = 
-`💼 *NEW CAREGIVER JOB APPLICATION* 💼
-------------------------------------
-👤 *Candidate Name:* ${caregiverData.name || 'Not provided'}
-📍 *City/Location:* ${caregiverData.city}
-⭐ *Experience:* ${caregiverData.experience}
-⏰ *Preferred Shift:* ${caregiverData.workType}
 
-💬 *Request:* I want to join JapaCares as a caregiver. Please guide me for verification.`;
-    }
-
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summaryMessage)}`;
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      summaryMessage
+    )}`;
     window.open(waUrl, "_blank");
     onClose();
     setStep(1);
@@ -79,65 +71,44 @@ export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onC
           {/* Header */}
           <div className="mb-6">
             <span className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-500 bg-rose-50 px-3 py-1 rounded-full border border-rose-100 mb-2">
-              <Sparkles size={12} /> JapaCares Quick Connect
+              <Sparkles size={12} /> Instant Caregiver Match
             </span>
             <h3 className="font-serif text-2xl font-bold text-gray-900">
-              How can we help you?
+              Book a Verified Caregiver
             </h3>
             <p className="text-gray-500 text-xs mt-1">
-              Select an option below for instant response.
+              Select your requirements below to get instant caregiver profiles.
             </p>
           </div>
 
-          {/* STEP 1: CHOOSE USER TYPE (Client vs Caregiver) */}
+          {/* Progress Steps */}
+          <div className="flex gap-2 mb-6">
+            {[1, 2, 3].map((s) => (
+              <div
+                key={s}
+                className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
+                  s <= step ? "bg-rose-500" : "bg-gray-200"
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* STEP 1: CITY & SHIFT (SEEDHA YAHAN SE SHURU HOGA) */}
           {step === 1 && (
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-              <label className="block text-xs font-bold text-gray-700 mb-2">
-                What are you looking for?
-              </label>
-
-              <div className="grid grid-cols-1 gap-3">
-                <button
-                  type="button"
-                  onClick={() => { setUserType("client"); setStep(2); }}
-                  className="p-4 rounded-2xl border-2 border-rose-100 hover:border-rose-500 bg-rose-50/30 hover:bg-rose-50 text-left transition-all group flex items-center gap-4"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 text-white flex items-center justify-center shadow-md flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <HeartHandshake size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm">Book a Caregiver</h4>
-                    <p className="text-xs text-gray-500 mt-0.5">Need postpartum care for mother & newborn baby</p>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => { setUserType("caregiver"); setStep(2); }}
-                  className="p-4 rounded-2xl border-2 border-teal-100 hover:border-teal-500 bg-teal-50/30 hover:bg-teal-50 text-left transition-all group flex items-center gap-4"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white flex items-center justify-center shadow-md flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <Briefcase size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm">Become a Caregiver</h4>
-                    <p className="text-xs text-gray-500 mt-0.5">Looking for work/jobs as a verified Jaapa caregiver</p>
-                  </div>
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* STEP 2: CLIENT FLOW */}
-          {step === 2 && userType === "client" && (
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-4"
+            >
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5">
                   <MapPin size={14} className="text-rose-500" /> Select Your City
                 </label>
                 <select
-                  value={clientData.city}
-                  onChange={(e) => setClientData({ ...clientData, city: e.target.value })}
+                  value={formData.city}
+                  onChange={(e) =>
+                    setFormData({ ...formData, city: e.target.value })
+                  }
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-rose-500 bg-gray-50 font-medium"
                 >
                   <option value="Delhi NCR">Delhi NCR (Delhi, Gurgaon, Noida)</option>
@@ -151,7 +122,7 @@ export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onC
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5">
-                  <Clock size={14} className="text-rose-500" /> Shift / Care Duration
+                  <Clock size={14} className="text-rose-500" /> Select Shift Duration
                 </label>
                 <div className="space-y-2">
                   {[
@@ -163,15 +134,70 @@ export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onC
                     <button
                       key={option}
                       type="button"
-                      onClick={() => setClientData({ ...clientData, shift: option })}
+                      onClick={() =>
+                        setFormData({ ...formData, shift: option })
+                      }
                       className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold border transition-all flex items-center justify-between ${
-                        clientData.shift === option
+                        formData.shift === option
                           ? "border-rose-500 bg-rose-50/50 text-rose-700 shadow-sm"
                           : "border-gray-200 hover:border-gray-300 text-gray-700"
                       }`}
                     >
                       <span>{option}</span>
-                      {clientData.shift === option && <CheckCircle2 size={16} className="text-rose-500" />}
+                      {formData.shift === option && (
+                        <CheckCircle2 size={16} className="text-rose-500" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setStep(2)}
+                className="w-full mt-4 bg-gray-900 hover:bg-rose-600 text-white font-semibold py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
+              >
+                <span>Next: Delivery Timing</span>
+                <ChevronRight size={16} />
+              </button>
+            </motion.div>
+          )}
+
+          {/* STEP 2: DELIVERY TIMING */}
+          {step === 2 && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5">
+                  <Calendar size={14} className="text-rose-500" /> When do you need the caregiver?
+                </label>
+                <div className="space-y-2">
+                  {[
+                    "Urgent / Already Delivered",
+                    "Expecting within 15 Days",
+                    "Expecting within 1 Month",
+                    "Expecting in 2-3 Months",
+                    "Post C-Section Special Care",
+                  ].map((status) => (
+                    <button
+                      key={status}
+                      type="button"
+                      onClick={() =>
+                        setFormData({ ...formData, deliveryStatus: status })
+                      }
+                      className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold border transition-all flex items-center justify-between ${
+                        formData.deliveryStatus === status
+                          ? "border-rose-500 bg-rose-50/50 text-rose-700 shadow-sm"
+                          : "border-gray-200 hover:border-gray-300 text-gray-700"
+                      }`}
+                    >
+                      <span>{status}</span>
+                      {formData.deliveryStatus === status && (
+                        <CheckCircle2 size={16} className="text-rose-500" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -190,16 +216,20 @@ export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onC
                   onClick={() => setStep(3)}
                   className="flex-1 bg-gray-900 hover:bg-rose-600 text-white font-semibold py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
                 >
-                  <span>Next: Delivery Timing</span>
+                  <span>Next: Name & Summary</span>
                   <ChevronRight size={16} />
                 </button>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 3: CLIENT FINAL SUMMARY */}
-          {step === 3 && userType === "client" && (
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
+          {/* STEP 3: NAME & WHATSAPP SUMMARY */}
+          {step === 3 && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-4"
+            >
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
                   <User size={14} className="text-rose-500" /> Your Name
@@ -207,19 +237,28 @@ export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onC
                 <input
                   type="text"
                   placeholder="e.g. Ananya Sharma"
-                  value={clientData.name}
-                  onChange={(e) => setClientData({ ...clientData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-rose-500 bg-gray-50"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-rose-500 bg-gray-50 font-medium"
                 />
               </div>
 
               <div className="bg-rose-50/60 rounded-2xl p-4 border border-rose-100 text-xs space-y-1.5 text-gray-700">
                 <p className="font-bold text-gray-900 border-b border-rose-200/60 pb-1 flex items-center justify-between">
                   <span>Care Booking Summary</span>
-                  <Sparkles size={14} className="text-rose-500" />
+                  <ShieldCheck size={14} className="text-teal-600" />
                 </p>
-                <p>📍 <strong>City:</strong> {clientData.city}</p>
-                <p>⏰ <strong>Shift:</strong> {clientData.shift}</p>
+                <p>
+                  📍 <strong>City:</strong> {formData.city}
+                </p>
+                <p>
+                  ⏰ <strong>Shift:</strong> {formData.shift}
+                </p>
+                <p>
+                  📅 <strong>Requirement:</strong> {formData.deliveryStatus}
+                </p>
               </div>
 
               <div className="flex gap-3 pt-2">
@@ -235,86 +274,14 @@ export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onC
                   onClick={handleSendToWhatsApp}
                   className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
                 >
-                  <span>Send Booking to WhatsApp</span>
+                  <span>Get Summary on WhatsApp</span>
                   <ChevronRight size={16} />
                 </button>
               </div>
-            </motion.div>
-          )}
 
-          {/* STEP 2: CAREGIVER WORK FLOW */}
-          {step === 2 && userType === "caregiver" && (
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                  <User size={14} className="text-teal-600" /> Your Full Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Sunita Devi"
-                  value={caregiverData.name}
-                  onChange={(e) => setCaregiverData({ ...caregiverData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-teal-500 bg-gray-50"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5">
-                  <MapPin size={14} className="text-teal-600" /> Which city do you want to work in?
-                </label>
-                <select
-                  value={caregiverData.city}
-                  onChange={(e) => setCaregiverData({ ...caregiverData, city: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-teal-500 bg-gray-50 font-medium"
-                >
-                  <option value="Delhi NCR">Delhi NCR</option>
-                  <option value="Mumbai">Mumbai</option>
-                  <option value="Bengaluru">Bengaluru</option>
-                  <option value="Jaipur">Jaipur</option>
-                  <option value="Other City">Other City</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5">
-                  <Briefcase size={14} className="text-teal-600" /> Experience in Baby/Mother Massage Care
-                </label>
-                <div className="space-y-2">
-                  {["1 to 2 Years Experience", "2 to 5 Years Experience", "5+ Years Experience (Senior Caregiver)"].map((exp) => (
-                    <button
-                      key={exp}
-                      type="button"
-                      onClick={() => setCaregiverData({ ...caregiverData, experience: exp })}
-                      className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold border transition-all flex items-center justify-between ${
-                        caregiverData.experience === exp
-                          ? "border-teal-500 bg-teal-50/50 text-teal-700 shadow-sm"
-                          : "border-gray-200 hover:border-gray-300 text-gray-700"
-                      }`}
-                    >
-                      <span>{exp}</span>
-                      {caregiverData.experience === exp && <CheckCircle2 size={16} className="text-teal-600" />}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="px-4 py-3.5 rounded-xl border border-gray-200 text-xs font-semibold text-gray-600 hover:bg-gray-50"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSendToWhatsApp}
-                  className="flex-1 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
-                >
-                  <span>Apply on WhatsApp</span>
-                  <ChevronRight size={16} />
-                </button>
-              </div>
+              <p className="text-[10px] text-gray-400 text-center">
+                100% Free Consultation · Instant Response Guaranteed
+              </p>
             </motion.div>
           )}
         </motion.div>
