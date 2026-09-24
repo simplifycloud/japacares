@@ -141,7 +141,7 @@ export default function BecomeCaregiver() {
               <span className="text-orange-500">📋</span> Identity verification (in-person)
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-600">
-              <span className="text-green-500">🏅</span> Get your Jaapa Verified Badge
+              <span className="text-green-500">🏅</span> Get your Japa Verified Badge
             </div>
           </div>
 
@@ -211,7 +211,7 @@ export default function BecomeCaregiver() {
 
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl p-8 md:p-12">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-pink-600">
-          Become a Jaapa Caregiver
+          Become a Japa Caregiver
         </h1>
         <p className="text-center text-gray-500 mt-3 mb-10">
           Join our network of verified caregivers and help new mothers across India.
@@ -592,7 +592,7 @@ export default function BecomeCaregiver() {
               {
                 key: "backgroundCheck" as const,
                 title: "Background Verification Consent",
-                description: "I consent to Jaapa conducting a thorough background verification check including identity, address, and employment history during the in-person verification stage.",
+                description: "I consent to Japa conducting a thorough background verification check including identity, address, and employment history during the in-person verification stage.",
               },
               {
                 key: "policeVerification" as const,
@@ -602,12 +602,12 @@ export default function BecomeCaregiver() {
               {
                 key: "termsConditions" as const,
                 title: "Terms & Conditions",
-                description: "I have read and agree to Jaapa's Terms & Conditions, Privacy Policy, and Caregiver Service Agreement.",
+                description: "I have read and agree to Japa's Terms & Conditions, Privacy Policy, and Caregiver Service Agreement.",
               },
               {
                 key: "codeOfConduct" as const,
                 title: "Code of Conduct",
-                description: "I agree to follow Jaapa's Code of Conduct including maintaining professional behaviour, respecting client privacy, and providing safe, ethical care at all times.",
+                description: "I agree to follow Japa's Code of Conduct including maintaining professional behaviour, respecting client privacy, and providing safe, ethical care at all times.",
               },
             ].map((item) => (
               <label key={item.key}
@@ -654,7 +654,7 @@ export default function BecomeCaregiver() {
                   Privacy Policy *
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
-                  I have read and understood Jaapa&apos;s{" "}
+                  I have read and understood Japa&apos;s{" "}
                   <a href="/privacy-policy" target="_blank" className="text-pink-600 underline font-medium">
                     Privacy Policy
                   </a>
